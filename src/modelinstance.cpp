@@ -369,8 +369,9 @@ Status ModelInstance::loadModelImpl(const ModelConfig& config, const DynamicMode
             if (this->config.isCustomLoaderRequiredToLoadModel()) {
                 // loading the model using the custom loader
                 status = loadOVCNNNetworkUsingCustomLoader();
-            } else
+            } else {
                 status = loadOVCNNNetwork();
+            }
         }
 
         if (!status.ok()) {
