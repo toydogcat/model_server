@@ -28,6 +28,8 @@
 #include "tensorflow/core/framework/tensor.h"
 #include "tensorflow_serving/apis/prediction_service.grpc.pb.h"
 
+#include "customloaderconfig.hpp"
+#include "customloaderinterface.hpp"
 #include "modelconfig.hpp"
 #include "modelinstanceunloadguard.hpp"
 #include "modelversionstatus.hpp"
@@ -176,6 +178,18 @@ protected:
          * @brief Holds currently loaded model configuration
          */
     ModelConfig config;
+
+    /**
+         * @brief Holds pointer to the custom loader interface
+         */
+    std::shared_ptr<CustomLoaderInterface> customLoaderInterfacePtr;
+
+    /**
+         * @brief Loads OV CNNNetwork Using the Custom Loader
+         *
+         * @return Status
+         */
+    Status loadOVCNNNetworkUsingCustomLoader();
 
 private:
     /**
@@ -451,5 +465,25 @@ public:
     const Status validate(const tensorflow::serving::PredictRequest* request);
 
     static const int WAIT_FOR_MODEL_LOADED_TIMEOUT_MILLISECONDS = 100;
+
+    /**
+         * @brief Set the custom loader interface pointer
+         *
+         * @param custom loader interface pointer
+         *
+         * @return status
+         */
+    void setCustomLoaderInterfacePtr(std::shared_ptr<CustomLoaderInterface> ptr) {
+        customLoaderInterfacePtr = ptr;
+    }
+
+    /**
+         * @brief Gets model config
+         *
+         * @return model config
+         */
+    virtual const std::shared_ptr<CustomLoaderInterface> getCustomLoaderInterfacePtr() const {
+        return customLoaderInterfacePtr;
+    }
 };
 }  // namespace ovms
