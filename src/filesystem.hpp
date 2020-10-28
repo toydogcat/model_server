@@ -71,7 +71,7 @@ StatusCode CreateLocalDir(const std::string& path) {
     int status =
         mkdir(const_cast<char*>(path.c_str()), S_IRUSR | S_IWUSR | S_IXUSR);
     if (status == -1) {
-        SPDLOG_ERROR("Failed to create local folder: {} {} ", path,
+        spdlog::error("Failed to create local folder: {} {} ", path,
             strerror(errno));
         return StatusCode::PATH_INVALID;
     }

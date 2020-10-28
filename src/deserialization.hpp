@@ -109,7 +109,7 @@ Status deserializePredictRequest(
             auto tensorInfo = pair.second;
             auto requestInputItr = request.inputs().find(name);
             if (requestInputItr == request.inputs().end()) {
-                SPDLOG_ERROR("Failed to deserialize request. Validation of request failed");
+                spdlog::warn("Failed to deserialize request. Validation of request failed");
                 return Status(StatusCode::INTERNAL_ERROR, "Failed to deserialize request");
             }
             auto& requestInput = requestInputItr->second;
@@ -120,7 +120,7 @@ Status deserializePredictRequest(
 
             if (blob == nullptr) {
                 Status status = StatusCode::OV_UNSUPPORTED_DESERIALIZATION_PRECISION;
-                SPDLOG_ERROR(status.string());
+                spdlog::warn(status.string());
                 return status;
             }
             inferRequest.SetBlob(tensorInfo->getName(), blob);
@@ -130,11 +130,11 @@ Status deserializePredictRequest(
         // OV can throw exceptions derived from std::logic_error.
     } catch (const InferenceEngine::details::InferenceEngineException& e) {
         Status status = StatusCode::OV_INTERNAL_DESERIALIZATION_ERROR;
-        SPDLOG_ERROR("{}: {}", status.string(), e.what());
+        spdlog::warn("{}: {}", status.string(), e.what());
         return status;
     } catch (std::logic_error& e) {
         Status status = StatusCode::OV_INTERNAL_DESERIALIZATION_ERROR;
-        SPDLOG_ERROR("{}: {}", status.string(), e.what());
+        spdlog::warn("{}: {}", status.string(), e.what());
         return status;
     }
 
