@@ -40,7 +40,7 @@ as::cloud_storage_account createDefaultOrAnonymousAccount() {
 
         as::cloud_storage_account storage_account = as::cloud_storage_account::parse(credentials);
         if (!storage_account.is_initialized()) {
-            spdlog::warn("Unable to create default azure storage account");
+            spdlog::error("Unable to create default azure storage account");
             throw std::runtime_error("Unable to create default azure storage account");
         }
 

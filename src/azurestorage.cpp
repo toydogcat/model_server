@@ -27,16 +27,16 @@ void print_as_storage_exception_msg(const as::storage_exception& e){
     as::request_result result = e.result();
     as::storage_extended_error extended_error = result.extended_error();
     if (!extended_error.message().empty()) {
-        spdlog::warn("Unable to access path: {}", extended_error.message());
+        spdlog::error("Unable to access path: {}", extended_error.message());
     }
     else
     {
-        spdlog::warn("Unable to access path: {}", e.what());
+        spdlog::error("Unable to access path: {}", e.what());
     }
 }
 
 void print_std_exception_msg(const std::exception& e) {
-        spdlog::warn("Unable to access path: {}", e.what());
+        spdlog::error("Unable to access path: {}", e.what());
 }
 
 std::string AzureStorageAdapter::joinPath(std::initializer_list<std::string> segments) {

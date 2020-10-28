@@ -86,7 +86,7 @@ private:
         }
         req->WriteResponseString(output);
         if (http_status != net_http::HTTPStatusCode::OK) {
-            spdlog::warn("Processing HTTP/REST request failed: {} {}. Reason: {}",
+            spdlog::debug("Processing HTTP/REST request failed: {} {}. Reason: {}",
                 req->http_method(),
                 req->uri_path(),
                 status.string());
