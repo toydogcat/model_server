@@ -36,10 +36,10 @@ echo "Generating certificates..."
 echo "===================================================================================================================================================="
 echo "WARNING: For development and testing only. Please follow your organization security practices on handling and distribution of cryptography material."
 echo "===================================================================================================================================================="
-openssl req -x509 -nodes -days 1 -newkey rsa:2048 -keyout server.key -out server.pem -subj "/C=US/CN=localhost"
-openssl genrsa -out client_cert_ca.key 2048
-openssl req -x509 -new -nodes -key client_cert_ca.key -sha256 -days 1024 -out client_cert_ca.pem -subj "/C=US/CN=localhost"
-openssl genrsa -out client.key 2048
+openssl req -x509 -nodes -days 1 -newkey rsa:4096 -keyout server.key -out server.pem -subj "/C=US/CN=localhost"
+openssl genrsa -out client_cert_ca.key 4096
+openssl req -x509 -new -nodes -key client_cert_ca.key -sha256 -days 1 -out client_cert_ca.pem -subj "/C=US/CN=localhost"
+openssl genrsa -out client.key 4096
 openssl req -new -key client.key -out client.csr -subj "/C=US/CN=client"
 openssl x509 -req -in client.csr -CA client_cert_ca.pem -CAkey client_cert_ca.key -CAcreateserial -out client.pem -days 1 -sha256
 echo "Key material is ready."

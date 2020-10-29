@@ -235,7 +235,7 @@ std::vector<std::unique_ptr<Server>> startGRPCServer(
         }
         servers.push_back(std::move(server));
     }
-    spdlog::info("Server started on {}:{}", config.grpcBindAddress(), config.port());
+    spdlog::info("Server started on port {} (bind address: {})", config.port(), config.grpcBindAddress());
 
     return servers;
 }
